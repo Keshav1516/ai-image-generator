@@ -1,3 +1,5 @@
+!pip install diffusers transformers accelerate safetensors
+
 import streamlit as st
 from diffusers import StableDiffusionPipeline
 import torch
