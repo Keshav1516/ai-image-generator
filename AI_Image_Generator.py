@@ -1,5 +1,4 @@
-!pip install --upgrade pip
-!pip install diffusers transformers accelerate safetensors
+!pip install diffusers transformers accelerate safetensors Pillow --extra-index-url https://download.pytorch.org/whl/cpu
 
 import streamlit as st
 from diffusers import StableDiffusionPipeline
