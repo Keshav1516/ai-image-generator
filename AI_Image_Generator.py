@@ -1,3 +1,4 @@
+!pip install --upgrade pip
 !pip install diffusers transformers accelerate safetensors
 
 import streamlit as st
