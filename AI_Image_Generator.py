@@ -4,22 +4,19 @@ import torch
 from PIL import Image
 import io
 
-# Set page config
+# Streamlit Page Config
 st.set_page_config(page_title="AI Image Generator", layout="wide")
 
-# Title
-st.title("🎨 AI Image Generator")
-st.write("Generate stunning images from text prompts using Stable Diffusion.")
+st.title("🎨 AI Image Generator (Python 3.11)")
+st.write("Generate AI images using Stable Diffusion + Streamlit")
 
 # Sidebar inputs
-st.sidebar.header("⚙️ Settings")
 prompt = st.text_area("Enter your prompt:", "A futuristic city skyline at sunset")
 num_images = st.sidebar.slider("Number of images", 1, 4, 1)
-image_size = st.sidebar.selectbox("Image size", ["512x512", "768x768", "1024x1024"])
 guidance_scale = st.sidebar.slider("Guidance scale", 1.0, 15.0, 7.5)
-steps = st.sidebar.slider("Inference steps", 10, 100, 50)
+steps = st.sidebar.slider("Inference steps", 10, 75, 30)
 
-# Load model once
+# Model loader
 @st.cache_resource
 def load_model():
     model_id = "runwayml/stable-diffusion-v1-5"
@@ -29,7 +26,6 @@ def load_model():
 
 pipe = load_model()
 
-# Generate button
 if st.button("🚀 Generate"):
     if not prompt.strip():
         st.warning("Please enter a prompt before generating.")
@@ -37,10 +33,13 @@ if st.button("🚀 Generate"):
         with st.spinner("Generating images... ⏳"):
             images = []
             for _ in range(num_images):
-                img = pipe(prompt, guidance_scale=guidance_scale, num_inference_steps=steps).images[0]
+                img = pipe(
+                    prompt,
+                    guidance_scale=guidance_scale,
+                    num_inference_steps=steps
+                ).images[0]
                 images.append(img)
 
-        # Show images
         cols = st.columns(num_images)
         for i, img in enumerate(images):
             with cols[i]:
